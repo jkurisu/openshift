@@ -276,6 +276,9 @@
             "terminationGracePeriodSeconds": 30,
             "dnsPolicy": "ClusterFirst",
             "serviceAccount": "${APPLICATION_NAME}-user"
+            "securityContext": {
+                "privileged": true
+            }
           }
         }
       }
