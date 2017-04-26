@@ -112,6 +112,22 @@
          "kind": "ImageStream",
          "apiVersion": "v1",
          "metadata": {
+            "name": "s2i-productmachine",
+            "namespace": "jkurisu"
+         },
+         "spec": {
+            "dockerImageRepository": "hub.docker.com/jkurisu/s2i-productmachine",
+            "tags": [
+               {
+                  "name": "latest"
+               }
+            ]
+         }
+      },
+      {
+         "kind": "ImageStream",
+         "apiVersion": "v1",
+         "metadata": {
             "name": "${APPLICATION_NAME}"
          },
          "spec": {
