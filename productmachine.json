@@ -116,7 +116,7 @@
             "namespace": "jkurisu"
          },
          "spec": {
-            "dockerImageRepository": "hub.docker.com/jkurisu/s2i-productmachine",
+            "dockerImageRepository": "hub.docker.com/r/jkurisu/s2i-productmachine",
             "tags": [
                {
                   "name": "latest"
