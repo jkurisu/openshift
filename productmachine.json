@@ -89,7 +89,6 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "namespace": "jkurisu",
                             "name": "s2i-productmachine:latest"
                         },
                         "env": [
