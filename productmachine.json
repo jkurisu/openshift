@@ -2,25 +2,29 @@
     "kind": "Template",
     "apiVersion": "v1",
     "metadata": {
-        "name": "mlbparks-eap",
+        "name": "product-machine-liberty",
         "annotations": {
             "iconClass": "icon-jboss",
-            "description": "Application template for MLB Parks application on EAP 6 & MongoDB built using STI"
+            "description": "Application template for Product Machine on Liberty built using STI"
         }
     },
     "labels": {
-        "application": "mlbparks",
-        "createdBy": "template-mlbparks-eap"
+        "application": "product-machine",
+        "createdBy": "template-product-machine-liberty"
     },
     "parameters": [
         {
             "description": "The name for the application.",
             "name": "APPLICATION_NAME",
-            "value": "mlbparks"
+            "value": "product-machine"
         },
         {
             "description": "Custom hostname for service routes.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
             "name": "APPLICATION_HOSTNAME"
+        },
+        {
+            "description": "Project name that this will be deployed to.",
+            "name": "PROJECT_NAME"
         },
         {
             "description": "Git source URI for application",
@@ -89,6 +93,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
+                            "namespace": "${PROJECT_NAME}",
                             "name": "s2i-productmachine:latest"
                         },
                         "env": [
