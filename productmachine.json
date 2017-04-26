@@ -24,7 +24,8 @@
         },
         {
             "description": "Project name that this will be deployed to.",
-            "name": "PROJECT_NAME"
+            "name": "PROJECT_NAME",
+            "required": true
         },
         {
             "description": "Git source URI for application",
