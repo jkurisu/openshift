@@ -90,7 +90,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "jkurisu",
-                            "name": "s2i-productmachine"
+                            "name": "s2i-productmachine:latest"
                         },
                         "env": [
                             {
@@ -103,8 +103,7 @@
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
-                        "namespace": "latest",
-                        "name": "${APPLICATION_NAME}"
+                        "name": "${APPLICATION_NAME}:latest"
                     }
                 }
             }
