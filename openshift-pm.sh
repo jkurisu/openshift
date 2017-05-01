@@ -6,6 +6,9 @@ oc login -u system:admin
 oc delete is --all -n openshift
 oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-rhel7.json -n openshift
 oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json -n openshift
+
+oc create -f https://raw.githubusercontent.com/jkurisu/openshift/master/productmachine.json -n openshift
+
 oadm policy add-scc-to-group anyuid system:authenticated
 oc login -u developer -p developer
 oc new-project dev --display-name="Tasks - Dev"
