@@ -16,7 +16,7 @@
         {
             "description": "The name for the application.",
             "name": "APPLICATION_NAME",
-            "value": "product-machine"
+            "value": "pm"
         },
         {
             "description": "Custom hostname for service routes.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
