@@ -1,0 +1,34 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "pm-image-streams",
+        "annotations": {
+            "description": "ImageStream definitions for Product Machine."
+        }
+    },
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "ImageStream",
+            "metadata": {
+                "name": "s2i-productmachine"
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "jkurisu/s2i-productmachine"
+                        },
+                        "importPolicy": {},
+                        "name": "latest",
+                        "referencePolicy": {
+                            "type": "Source"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
