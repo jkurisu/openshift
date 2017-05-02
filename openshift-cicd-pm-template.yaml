@@ -85,9 +85,9 @@ objects:
              }
 
              stage ('Deploy DEV') {
-               sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+               sh "rm -rf oc-build"
                sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
-               sh "cp target/pmweb.war oc-build/pmweb.war"
+               sh "cp target/pmweb.war oc-build/pm.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
                sh "oc delete bc,dc,svc,route -l app=pm -n ${DEV_PROJECT}"
