@@ -76,7 +76,7 @@ objects:
              // define commands
              def mvnCmd = "mvn -s configuration/settings.xml"
              stage ('Build') {
-               git branch: 'master', url: 'https://github.com/jkurisu/pmweb.git'
+               git branch: 'fja', url: 'https://github.com/jkurisu/pmweb.git'
                sh "${mvnCmd} clean install -DskipTests=true"
              }
 
