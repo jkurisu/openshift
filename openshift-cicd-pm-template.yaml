@@ -86,12 +86,13 @@ objects:
 
              stage ('Deploy DEV') {
                sh "rm -rf oc-build && mkdir -p oc-build/deployments"
-               sh "cp target/pmweb.war oc-build/deployments/ROOT.war"
+               sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
+               sh "cp target/pmweb.war oc-build/pmweb.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
                sh "oc delete bc,dc,svc,route -l app=pm -n ${DEV_PROJECT}"
                // create build. override the exit code since it complains about exising imagestream
-               sh "oc new-build --name=pm --image-stream=s2i-productmachine~https://github.com/jkurisu/productmachine.git --binary=true --labels=app=pm -n ${DEV_PROJECT} || true"
+               sh "oc new-build --name=pm --image-stream=s2i-productmachine --binary=true --labels=app=pm -n ${DEV_PROJECT} || true"
                // build image
                sh "oc start-build pm --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
                // deploy image
@@ -103,6 +104,9 @@ objects:
                timeout(time:5, unit:'MINUTES') {
                   input message: "Promote to STAGE?", ok: "Promote"
                }
+               
+               
+               
 
                def v = version()
                // tag for stage
