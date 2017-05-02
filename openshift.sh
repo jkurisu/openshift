@@ -1,3 +1,7 @@
+export http_proxy=http://192.168.11.17:8080
+export https_proxy=http://192.168.11.17:8080
+export no_proxy=localhost,127.0.0.1,172.20.55.227,172.30.1.1,172.20.56.28
+
 export KUBECONFIG=/var/lib/origin/openshift.local.config/master/admin.kubeconfig
 export CURL_CA_BUNDLE=/var/lib/origin/openshift.local.config/master/ca.crt
 chmod +r /var/lib/origin/openshift.local.config/master/admin.kubeconfig
