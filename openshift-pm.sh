@@ -5,7 +5,7 @@ export no_proxy=localhost,127.0.0.1,172.20.55.227,172.30.1.1,172.20.56.28
 export KUBECONFIG=/var/lib/origin/openshift.local.config/master/admin.kubeconfig
 export CURL_CA_BUNDLE=/var/lib/origin/openshift.local.config/master/ca.crt
 chmod +r /var/lib/origin/openshift.local.config/master/admin.kubeconfig
-oc cluster up
+oc cluster up --http-proxy=http://192.168.11.17:8080 --https-proxy=http://192.168.11.17:8080 --no-proxy='localhost,127.0.0.1,172.30.0.0/16,172.20.0.0/16,172.17.0.0/16'
 oc login -u system:admin
 oc delete is --all -n openshift
 oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-rhel7.json -n openshift
@@ -15,7 +15,8 @@ oc create -f  https://raw.githubusercontent.com/jkurisu/openshift/master/product
 
 oc create -f https://raw.githubusercontent.com/jkurisu/openshift/master/productmachine.json -n openshift
 
-oadm policy add-scc-to-group anyuid system:authenticated
+###oadm policy add-scc-to-group anyuid system:authenticated
+
 oc login -u developer -p developer
 oc new-project dev --display-name="Tasks - Dev"
 oc new-project stage --display-name="Tasks - Stage"

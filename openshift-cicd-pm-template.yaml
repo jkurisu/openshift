@@ -76,6 +76,8 @@ objects:
              // define commands
              def mvnCmd = "mvn -s configuration/settings.xml"
              stage ('Build') {
+               sh "git config --global http.proxy http://192.168.11.17:8080"
+               sh "git config --global https.proxy http://192.168.11.17:8080"
                git branch: 'fja', url: 'https://github.com/jkurisu/pmweb.git'
                sh "${mvnCmd} clean install -DskipTests=true"
              }
