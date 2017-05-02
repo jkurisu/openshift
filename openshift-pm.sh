@@ -25,4 +25,4 @@ oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n stage
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd
 oc project cicd
-oc process -f https://raw.githubusercontent.com/jkurisu/openshift/master/openshift-cicd-pm-template.yaml | oc create -f -
+oc process -f https://raw.githubusercontent.com/jkurisu/openshift/fja/openshift-cicd-pm-template.yaml | oc create -f -
