@@ -62,9 +62,9 @@ objects:
   kind: BuildConfig
   metadata:
     labels:
-      app: cicd-pipeline
-      name: cicd-pipeline
-    name: tasks-pipeline
+      app: pm-cicd-pipeline
+      name: pm-cicd-pipeline
+    name: pm-tasks-pipeline
   spec:
     runPolicy: Serial
     source:
