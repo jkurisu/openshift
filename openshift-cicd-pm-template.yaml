@@ -181,21 +181,21 @@ objects:
              mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
              stage ('WellPoint Standalone Build') {
                git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
-               sh "${mvnCmd} clean install -DskipTests=true"
+               sh "${mvnCmd} clean install -DskipTests=true -PLegacyProduct"
              }
 
              stage ('Push WellPoint Standalone to Nexus') {
-              sh "${mvnCmd} deploy -DskipTests=true"
+              sh "${mvnCmd} deploy -DskipTests=true -PLegacyProduct"
              }
              
              mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
              stage ('WellPoint Standalone War Build') {
                git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
-               sh "${mvnCmd} clean install -DskipTests=true -f web-pom.xml"
+               sh "${mvnCmd} clean install -DskipTests=true -PLegacyProduct -f web-pom.xml"
              }
 
              stage ('Push WellPoint Standalone War to Nexus') {
-              sh "${mvnCmd} deploy -DskipTests=true -f web-pom.xml"
+              sh "${mvnCmd} deploy -DskipTests=true -PLegacyProduct -f web-pom.xml"
              }
 
              stage ('Deploy DEV') {
@@ -206,14 +206,14 @@ objects:
                sh "cp target/anthem*.war oc-build/pm.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
-               sh "oc delete bc,dc,svc,route -l app=pm -n ${DEV_PROJECT}"
+               sh "oc delete bc,dc,svc,route -l app=legacy -n ${DEV_PROJECT}"
                // create build. override the exit code since it complains about exising imagestream
-               sh "oc new-build --name=pm --image-stream=s2i-productmachine --binary=true --labels=app=pm -n ${DEV_PROJECT} || true"
+               sh "oc new-build --name=legacy --image-stream=s2i-productmachine --binary=true --labels=app=legacy -n ${DEV_PROJECT} || true"
                // build image
-               sh "oc start-build pm --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+               sh "oc start-build legacy --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
                // deploy image
-               sh "oc new-app pm:latest -n ${DEV_PROJECT}"
-               sh "oc expose svc/pm -n ${DEV_PROJECT}"
+               sh "oc new-app legacy:latest -n ${DEV_PROJECT}"
+               sh "oc expose svc/legacy -n ${DEV_PROJECT}"
              }
           }
 
@@ -300,14 +300,14 @@ objects:
                sh "cp target/anthem*.war oc-build/pm.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
-               sh "oc delete bc,dc,svc,route -l app=pm -n ${DEV_PROJECT}"
+               sh "oc delete bc,dc,svc,route -l app=master-product -n ${DEV_PROJECT}"
                // create build. override the exit code since it complains about exising imagestream
-               sh "oc new-build --name=pm --image-stream=s2i-productmachine --binary=true --labels=app=pm -n ${DEV_PROJECT} || true"
+               sh "oc new-build --name=master-product --image-stream=s2i-productmachine --binary=true --labels=app=master-product -n ${DEV_PROJECT} || true"
                // build image
-               sh "oc start-build pm --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+               sh "oc start-build master-product --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
                // deploy image
-               sh "oc new-app pm:latest -n ${DEV_PROJECT}"
-               sh "oc expose svc/pm -n ${DEV_PROJECT}"
+               sh "oc new-app master-product:latest -n ${DEV_PROJECT}"
+               sh "oc expose svc/master-product -n ${DEV_PROJECT}"
              }
           }
 
