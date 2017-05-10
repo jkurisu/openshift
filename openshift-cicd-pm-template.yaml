@@ -57,14 +57,182 @@ objects:
   subjects:
   - kind: ServiceAccount
     name: default
-# Pipeline
+# PM Git Pipeline
 - apiVersion: v1
   kind: BuildConfig
   metadata:
     labels:
-      app: cicd-pipeline
-      name: cicd-pipeline
-    name: pm-pipeline
+      app: pm-git-pipeline
+      name: pm-git-pipeline
+    name: pm-git-pipeline
+  spec:
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfile: |-
+          node('maven') {
+             // define commands
+             def mvnCmd = "mvn -s configuration/pm-git-settings.xml"
+             stage ('PM Git Server Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               sh "${mvnCmd} clean install -DskipTests=true -f pm-git-repo.xml"
+             }
+
+             stage ('Push PM Git Server to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true -f pm-git-repo.xml"
+             }
+             
+             mvnCmd = "mvn -s configuration/pm-git-settings.xml"
+             stage ('PM Git Server Karaf Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               sh "${mvnCmd} clean install -DskipTests=true"
+             }
+
+             stage ('Push PM Git Server Karaf to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true"
+             }
+                          
+             mvnCmd = "mvn -s configuration/pm-git-settings.xml"
+             stage ('PM Git Server War Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               sh "${mvnCmd} clean install -DskipTests=true -f web-pom.xml"
+             }
+
+             stage ('Push PM Git Server War to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true -f web-pom.xml"
+             }
+
+             stage ('Deploy DEV') {
+               sh "rm -rf oc-build"
+               sh "git config --global http.proxy http://192.168.11.17:8080"
+               sh "git config --global https.proxy http://192.168.11.17:8080"
+               sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
+               sh "cp target/pm.gitserver*.war oc-build/pm.war"
+               sh "oc project ${DEV_PROJECT}"
+               // clean up. keep the image stream
+               sh "oc delete bc,dc,svc,route -l app=git -n ${DEV_PROJECT}"
+               // create build. override the exit code since it complains about exising imagestream
+               sh "oc new-build --name=git --image-stream=s2i-productmachine --binary=true --labels=app=git -n ${DEV_PROJECT} || true"
+               // build image
+               sh "oc start-build git --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+               // deploy image
+               sh "oc new-app git:latest -n ${DEV_PROJECT}"
+               sh "oc expose svc/git -n ${DEV_PROJECT}"
+             }
+          }
+
+          def version() {
+            def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+            matcher ? matcher[0][1] : null
+          }
+      type: JenkinsPipeline
+      type: Generic
+  status:
+    lastVersion: 0        
+# Legacy PM Pipeline
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: legacy-pm-pipeline
+      name: legacy-pm-pipeline
+    name: legacy-pm-pipeline
+  spec:
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfile: |-
+          node('maven') {
+             // define commands
+             def mvnCmd = "mvn -s configuration/pmrs-settings.xml"
+             stage ('PMRS Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pmrs.git'
+               sh "${mvnCmd} clean install -DskipTests=true"
+             }
+
+             stage ('Push PMRS to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true"
+             }
+             
+             mvnCmd = "mvn -s configuration/wellpoint-pm-settings.xml"
+             stage ('WellPoint PM Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-mp-pm.git'
+               sh "${mvnCmd} clean install -DskipTests=true"
+             }
+
+             stage ('Push WellPoint PM to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true"
+             }
+             
+             mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
+             stage ('WellPoint Standalone Commands Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               sh "${mvnCmd} clean install -DskipTests=true -f commands-pom.xml"
+             }
+
+             stage ('Push WellPoint Standalone Commands to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true -f commands-pom.xml"
+             }
+             
+             mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
+             stage ('WellPoint Standalone Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               sh "${mvnCmd} clean install -DskipTests=true"
+             }
+
+             stage ('Push WellPoint Standalone to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true"
+             }
+             
+             mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
+             stage ('WellPoint Standalone War Build') {
+               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               sh "${mvnCmd} clean install -DskipTests=true -f web-pom.xml"
+             }
+
+             stage ('Push WellPoint Standalone War to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true -f web-pom.xml"
+             }
+
+             stage ('Deploy DEV') {
+               sh "rm -rf oc-build"
+               sh "git config --global http.proxy http://192.168.11.17:8080"
+               sh "git config --global https.proxy http://192.168.11.17:8080"
+               sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
+               sh "cp target/anthem*.war oc-build/pm.war"
+               sh "oc project ${DEV_PROJECT}"
+               // clean up. keep the image stream
+               sh "oc delete bc,dc,svc,route -l app=pm -n ${DEV_PROJECT}"
+               // create build. override the exit code since it complains about exising imagestream
+               sh "oc new-build --name=pm --image-stream=s2i-productmachine --binary=true --labels=app=pm -n ${DEV_PROJECT} || true"
+               // build image
+               sh "oc start-build pm --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+               // deploy image
+               sh "oc new-app pm:latest -n ${DEV_PROJECT}"
+               sh "oc expose svc/pm -n ${DEV_PROJECT}"
+             }
+          }
+
+          def version() {
+            def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+            matcher ? matcher[0][1] : null
+          }
+      type: JenkinsPipeline
+      type: Generic
+  status:
+    lastVersion: 0    
+# Master Product PM Pipeline
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: mp-pm-pipeline
+      name: mp-pm-pipeline
+    name: mp-pm-pipeline
   spec:
     runPolicy: Serial
     source:
