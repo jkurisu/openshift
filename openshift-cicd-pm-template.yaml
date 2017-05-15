@@ -76,7 +76,7 @@ objects:
              // define commands
              def mvnCmd = "mvn -s configuration/pm-git-settings.xml"
              stage ('PM Git Server Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               git branch: 'oc', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
                sh "${mvnCmd} clean install -DskipTests=true -f pom-git-repo.xml"
              }
 
@@ -86,7 +86,7 @@ objects:
              
              mvnCmd = "mvn -s configuration/pm-git-settings.xml"
              stage ('PM Git Server Karaf Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               git branch: 'oc', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
                sh "${mvnCmd} clean install -DskipTests=true"
              }
 
@@ -96,7 +96,7 @@ objects:
                           
              mvnCmd = "mvn -s configuration/pm-git-settings.xml"
              stage ('PM Git Server War Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
+               git branch: 'oc', url: 'http://172.20.56.28:85/standalone/pm-git-server.git'
                sh "${mvnCmd} clean install -DskipTests=true -f web-pom.xml"
              }
 
