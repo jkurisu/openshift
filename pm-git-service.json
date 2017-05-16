@@ -20,7 +20,6 @@
                 },
                 "ports": [
                     {
-                        "name": "pmrs4repo",
                         "protocol": "TCP",
                         "port": 9090,
                         "targetPort": 9090
