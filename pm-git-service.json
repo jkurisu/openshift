@@ -1,0 +1,17 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "pm-git-service"
+    },
+    "spec": {
+        "selector": {
+            "app": "git"
+        },
+        "ports": {
+            "protocol": "TCP",
+            "port": 9090,
+            "targetPort": 9090
+        }
+    }
+}    
