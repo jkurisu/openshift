@@ -1,4 +1,14 @@
 {
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "pm-git-sservices",
+        "annotations": {
+            "description": "Service definitions for Product Machine Git."
+        }
+    },
+    "items": [
+{
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
@@ -14,4 +24,6 @@
             "targetPort": 9090
         }
     }
-}    
+}
+    ]
+}
