@@ -25,7 +25,10 @@
                 ],
                 "selector": {
                     "app": "git"
-                }
+                },
+                "clusterIP": 172.30.252.206,
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
             }
         }
     ]
