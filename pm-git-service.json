@@ -23,11 +23,12 @@
                         "targetPort": 9090
                     }
                 ],
+                "clusterIP": "172.30.252.206",
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
                 "selector": {
                     "app": "git"
-                },
-                "type": "ClusterIP",
-                "sessionAffinity": "None"
+                }
             }
         }
     ]
