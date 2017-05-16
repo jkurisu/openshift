@@ -23,7 +23,6 @@
                         "targetPort": 9090
                     }
                 ],
-                "clusterIP": "172.30.166.227",
                 "selector": {
                     "app": "git"
                 }
