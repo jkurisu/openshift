@@ -33,6 +33,18 @@
                         "protocol": "TCP",
                         "port": 9400,
                         "targetPort": 9400
+                    },
+                    {
+                        "name": "master-product-key-values-db",
+                        "protocol": "TCP",
+                        "port": 9011,
+                        "targetPort": 9011
+                    },
+                    {
+                        "name": "master-product-dwb-db",
+                        "protocol": "TCP",
+                        "port": 9021,
+                        "targetPort": 9021
                     }
                 ],
                 "clusterIP": "172.30.208.206",
