@@ -12,7 +12,7 @@
             "kind": "Service",
             "apiVersion": "v1",
             "metadata": {
-                "name": "master-product-node-service-1"
+                "name": "master-product-service"
             },
             "spec": {
                 "ports": [
@@ -21,47 +21,13 @@
                         "protocol": "TCP",
                         "port": 5401,
                         "targetPort": 5401
-                    }
-                ],
-                "clusterIP": "172.30.208.206",
-                "type": "ClusterIP",
-                "sessionAffinity": "None",
-                "selector": {
-                    "app": "master-product"
-                }
-            }
-        },
-        {
-            "kind": "Service",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "master-product-node-service-2"
-            },
-            "spec": {
-                "ports": [
-                    {
+                    },
+                     {
                         "name": "mp-node-2",
                         "protocol": "TCP",
                         "port": 5402,
                         "targetPort": 5402
-                    }
-                ],
-                "clusterIP": "172.30.208.206",
-                "type": "ClusterIP",
-                "sessionAffinity": "None",
-                "selector": {
-                    "app": "master-product"
-                }
-            }
-        },
-        {
-            "kind": "Service",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "master-product-root-node-service"
-            },
-            "spec": {
-                "ports": [
+                    },
                     {
                         "name": "mp-root",
                         "protocol": "TCP",
