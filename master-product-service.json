@@ -1,0 +1,81 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "master-product-services",
+        "annotations": {
+            "description": "Service definitions for Product Machine Master Product."
+        }
+    },
+    "items": [
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "master-product-node-service-1"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "mp-node-1",
+                        "protocol": "TCP",
+                        "port": 5401,
+                        "targetPort": 5401
+                    }
+                ],
+                "clusterIP": "172.30.208.206",
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
+                "selector": {
+                    "app": "master-product"
+                }
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "master-product-node-service-2"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "mp-node-2",
+                        "protocol": "TCP",
+                        "port": 5402,
+                        "targetPort": 5402
+                    }
+                ],
+                "clusterIP": "172.30.208.206",
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
+                "selector": {
+                    "app": "master-product"
+                }
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "master-product-root-node-service"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "mp-node-root",
+                        "protocol": "TCP",
+                        "port": 9400,
+                        "targetPort": 9400
+                    }
+                ],
+                "clusterIP": "172.30.208.206",
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
+                "selector": {
+                    "app": "master-product"
+                }
+            }
+        }
+    ]
+}
