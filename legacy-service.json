@@ -45,8 +45,13 @@
                         "protocol": "TCP",
                         "port": 9022,
                         "targetPort": 9022
+                    },
+                    {
+                        "name": "legacy-pmdb",
+                        "protocol": "TCP",
+                        "port": 9044,
+                        "targetPort": 9044
                     }
-                    
                 ],
                 "clusterIP": "172.30.208.207",
                 "type": "ClusterIP",
