@@ -12,7 +12,7 @@
             "kind": "Service",
             "apiVersion": "v1",
             "metadata": {
-                "name": "legacy-node-service-1"
+                "name": "legacy-service"
             },
             "spec": {
                 "ports": [
@@ -21,47 +21,13 @@
                         "protocol": "TCP",
                         "port": 6401,
                         "targetPort": 6401
-                    }
-                ],
-                "clusterIP": "172.30.208.207",
-                "type": "ClusterIP",
-                "sessionAffinity": "None",
-                "selector": {
-                    "app": "legacy"
-                }
-            }
-        },
-        {
-            "kind": "Service",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "legacy-node-service-2"
-            },
-            "spec": {
-                "ports": [
+                    },
                     {
                         "name": "legacy-node-2",
                         "protocol": "TCP",
                         "port": 6402,
                         "targetPort": 6402
-                    }
-                ],
-                "clusterIP": "172.30.208.207",
-                "type": "ClusterIP",
-                "sessionAffinity": "None",
-                "selector": {
-                    "app": "legacy"
-                }
-            }
-        },
-        {
-            "kind": "Service",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "legacy-root-node-service"
-            },
-            "spec": {
-                "ports": [
+                    },
                     {
                         "name": "legacy-root",
                         "protocol": "TCP",
