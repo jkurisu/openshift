@@ -33,7 +33,20 @@
                         "protocol": "TCP",
                         "port": 9500,
                         "targetPort": 9500
+                    },
+                    {
+                        "name": "legacy-key-values-db",
+                        "protocol": "TCP",
+                        "port": 9011,
+                        "targetPort": 9011
+                    },
+                    {
+                        "name": "legacy-dwb-db",
+                        "protocol": "TCP",
+                        "port": 9022,
+                        "targetPort": 9022
                     }
+                    
                 ],
                 "clusterIP": "172.30.208.207",
                 "type": "ClusterIP",
