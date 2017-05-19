@@ -63,7 +63,7 @@
             "spec": {
                 "ports": [
                     {
-                        "name": "mp-node-root",
+                        "name": "mp-root",
                         "protocol": "TCP",
                         "port": 9400,
                         "targetPort": 9400
