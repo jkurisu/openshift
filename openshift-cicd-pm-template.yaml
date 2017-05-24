@@ -202,7 +202,7 @@ objects:
                sh "rm -rf oc-build"
                sh "git config --global http.proxy http://192.168.11.17:8080"
                sh "git config --global https.proxy http://192.168.11.17:8080"
-               sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
+               sh "git clone -b legacy https://github.com/jkurisu/productmachine.git oc-build"
                sh "cp target/anthem*.war oc-build/pm.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
@@ -296,7 +296,7 @@ objects:
                sh "rm -rf oc-build"
                sh "git config --global http.proxy http://192.168.11.17:8080"
                sh "git config --global https.proxy http://192.168.11.17:8080"
-               sh "git clone https://github.com/jkurisu/productmachine.git oc-build"
+               sh "git clone -b master https://github.com/jkurisu/productmachine.git oc-build"
                sh "cp target/anthem*.war oc-build/pm.war"
                sh "oc project ${DEV_PROJECT}"
                // clean up. keep the image stream
