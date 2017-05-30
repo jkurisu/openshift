@@ -53,7 +53,7 @@
                         "targetPort": 9043
                     }
                 ],
-                "clusterIP": "172.30.208.206",
+                "clusterIP": "172.17.208.206",
                 "type": "ClusterIP",
                 "sessionAffinity": "None",
                 "selector": {
