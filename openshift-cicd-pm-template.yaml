@@ -170,7 +170,7 @@ objects:
              
              mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
              stage ('WellPoint Standalone Commands Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               git branch: 'legacy', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
                sh "${mvnCmd} clean install -DskipTests=true -f commands-pom.xml"
              }
 
@@ -180,7 +180,7 @@ objects:
              
              mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
              stage ('WellPoint Standalone Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               git branch: 'legacy', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
                sh "${mvnCmd} clean install -DskipTests=true -PLegacyProduct"
              }
 
@@ -190,7 +190,7 @@ objects:
              
              mvnCmd = "mvn -s configuration/wellpoint-standalone-settings.xml"
              stage ('WellPoint Standalone War Build') {
-               git branch: 'master', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
+               git branch: 'legacy', url: 'http://172.20.56.28:85/standalone/wellpoint-standalone.git'
                sh "${mvnCmd} clean install -DskipTests=true -PLegacyProduct -f web-pom.xml"
              }
 
